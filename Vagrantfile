@@ -99,18 +99,37 @@ Vagrant.configure(2) do |config|
       v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk2]
       v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', file_to_disk3]
 
+      #apply temp_tablespace to separate dev
+      file_to_disk4 = './.vagrant/zfs/large_disk4.vdi'
+      unless File.exist?(file_to_disk4)
+        v.customize ['createhd', '--filename', file_to_disk4, '--size', 250 * 1024]
+      end
     end
 
     # copy paste - because we need to explane 3 different port devices
     pkg_cmd = "zpool create lldata1 -m /srv/main /dev/sdb; "
     pkg_cmd << "zfs set compression=gzip-9 lldata1; "
+    pkg_cmd << "zfs set recordsize=8k lldata1; "
+    pkg_cmd << "zfs set atime=off lldata1; "
     pkg_cmd << "zpool create lldata2 -m /srv/second /dev/sdc; "
     pkg_cmd << "zfs set compression=gzip-9 lldata2; "
+    pkg_cmd << "zfs set recordsize=8k lldata2; "
+    pkg_cmd << "zfs set atime=off lldata2; "
     pkg_cmd << "zpool create lldata3 -m /srv/extension /dev/sdd; "
     pkg_cmd << "zfs set compression=gzip-9 lldata3; "
+    pkg_cmd << "zfs set recordsize=8k lldata3; "
+    pkg_cmd << "zfs set atime=off lldata3; "
+    
+    #temptablespace (rigth now with )
+    pkg_cmd << "zpool create lldata4 -m /srv/four /dev/sde; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata4; "
 
+    
     config.vm.provision :shell, :inline => pkg_cmd
 
+    #mkfs.ext4 -E stripe-wigth=256 (noatime, discard, defaults, nobarrier)
+    #mkfs.btrfs -l 8192 compress=lzo (noatime, discard, defaults, nobarrier, ssd)
+    
   end
   pkg_cmd = "apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
