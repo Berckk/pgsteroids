@@ -1,6 +1,8 @@
 ## PostgreSQL "Steroids" for Vanessa Users
 
-[![Build Status](https://travis-ci.org/VanessaDockers/pgsteroids.svg?branch=master)](https://travis-ci.org/VanessaDockers/pgsteroids)
+| master | develop |
+|--------|---------|
+|[![Build Status](https://travis-ci.org/VanessaDockers/pgsteroids.svg?branch=master)](https://travis-ci.org/VanessaDockers/pgsteroids)|[![Build Status](https://travis-ci.org/VanessaDockers/pgsteroids.svg?branch=develop)](https://travis-ci.org/VanessaDockers/pgsteroids)|
 
 > у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться
 
