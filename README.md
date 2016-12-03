@@ -1,5 +1,7 @@
 ## PostgreSQL "Steroids" for Vanessa Users
 
+[![Build Status](https://travis-ci.org/VanessaDockers/pgsteroids.svg?branch=master)](https://travis-ci.org/VanessaDockers/pgsteroids)
+
 > у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться
 
 | 9.4 | 9.5 |
