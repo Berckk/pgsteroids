@@ -16,3 +16,8 @@ alpine/67*
 alpine/68*
 alpine/69*
 alpine/70*
+
+*.box
+.bundle/
+output-*/
+packer_cache/
