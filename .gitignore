@@ -21,3 +21,5 @@ alpine/70*
 .bundle/
 output-*/
 packer_cache/
+
+bin/
