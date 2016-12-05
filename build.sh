@@ -4,7 +4,7 @@ if [ -f .env ]; then
 fi
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get upgrade docker-engine -y
+# sudo apt-get upgrade docker-engine -y
 sudo service docker restart
 
 docker pull daald/ubuntu32:trusty

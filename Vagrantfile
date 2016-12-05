@@ -76,6 +76,13 @@ Vagrant.configure(2) do |config|
 
   # Only run the provisioning on the first 'vagrant up'
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
+
+    #import key 
+    pkg_cmd = "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7F438280EF8D349F; "
+    # pkg_cmd << "sudo apt-get update;"
+    config.vm.provision :shell, :inline => pkg_cmd
+   
+
     # Install Docker
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
     # Add vagrant user to the docker group
@@ -104,6 +111,7 @@ Vagrant.configure(2) do |config|
       unless File.exist?(file_to_disk4)
         v.customize ['createhd', '--filename', file_to_disk4, '--size', 250 * 1024]
       end
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 4, '--device', 0, '--type', 'hdd', '--medium', file_to_disk4]
     end
 
     # copy paste - because we need to explane 3 different port devices
@@ -131,7 +139,8 @@ Vagrant.configure(2) do |config|
     #mkfs.btrfs -l 8192 compress=lzo (noatime, discard, defaults, nobarrier, ssd)
     
   end
-  pkg_cmd = "apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
+  pkg_cmd  = "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7F438280EF8D349F; "
+  pkg_cmd << "sudo apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
 
 end
